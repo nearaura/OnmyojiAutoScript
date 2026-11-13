@@ -301,11 +301,18 @@ class ScriptTask(RightActivity, Battle, GeneralBattle, SwitchSoul, Star56):
         if not self.appear(self.I_MD_WIN):
             return HookSignal.CONTINUE
         logger.info('Win battle')
-        while 1:
+        # 结算界面带动画过渡帧，单帧识别可能失败：
+        # 先盲点一次确保点击发出，再连续 3 帧未识别才判定界面已关闭
+        self.click(self.I_MD_WIN)
+        sleep(0.5)
+        miss = 0
+        while miss < 3:
             self.screenshot()
-            if not self.appear(self.I_MD_WIN):
-                break
-            self.click(self.I_MD_WIN)
+            if self.appear(self.I_MD_WIN):
+                miss = 0
+                self.click(self.I_MD_WIN)
+            else:
+                miss += 1
             sleep(0.5)
         pub.per_battle.success = BattleResult.SUCCESS
         return runtime.hook_enabled_update(
