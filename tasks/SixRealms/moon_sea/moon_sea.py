@@ -222,8 +222,10 @@ class MoonSea(MoonSeaMap, MoonSeaL101, MoonSeaL102, MoonSeaL103, MoonSeaL104, Mo
                 self.device.stuck_record_add('BATTLE_STATUS_S')
                 continue
         logger.info('Boss battle end')
-        if self.wait_until_appear(self.I_BOSS_SHUTU, wait_time=20):
+        if self.wait_until_appear(self.I_BOSS_SHUTU, wait_time=6):
             self.ui_click(self.I_BOSS_SHUTU, stop=self.I_MSTART)
+        elif self.wait_until_appear(self.I_BOSS_SHUTU2, wait_time=6):
+            self.ui_click(self.I_BOSS_SHUTU2, stop=self.I_MSTART)
         return True
 
     def select_shikigami_and_confirm(self):
