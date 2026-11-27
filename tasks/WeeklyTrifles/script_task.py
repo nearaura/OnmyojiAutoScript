@@ -132,11 +132,13 @@ class ScriptTask(GameUi, WeeklyTriflesAssets):
         # 一路进去
         while 1:
             self.screenshot()
-            if self.appear(self.I_WT_LOGO):
+            if self.appear(self.I_WT_COLLECT_WECHAT):
                 break
             if self.appear_then_click(self.I_WT_SHIKIAGMI, interval=1):
                 continue
-            if self.appear_then_click(self.I_WT_SHARE, interval=1):
+            if self.appear_then_click(self.I_WT_HUIJUAN, interval=1.5):
+                continue
+            if self.appear_then_click(self.I_WT_SHARE, interval=2.5):
                 continue
         # 点击分享
         while 1:
@@ -168,6 +170,8 @@ class ScriptTask(GameUi, WeeklyTriflesAssets):
             if self.appear(self.I_WT_SHIKIAGMI):
                 break
             if self.appear_then_click(self.I_UI_BACK_RED, interval=1):
+                continue
+            if self.appear_then_click(self.I_UI_BACK_BLUE, interval=1):
                 continue
             if self.appear_then_click(self.I_UI_BACK_YELLOW, interval=1):
                 continue
