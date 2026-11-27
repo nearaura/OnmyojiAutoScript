@@ -3,6 +3,7 @@
 # github https://github.com/runhey
 import sys
 
+import errno
 import logging
 import os
 import shutil
@@ -102,8 +103,46 @@ flutter_formatter = logging.Formatter(
 # ======================================================================================================================
 #            Set console logger
 # ======================================================================================================================
+class _WindowsConsoleStream:
+    """Keep Rich's terminal writes from aborting other OAS log destinations."""
+
+    def __init__(self, stream):
+        self.stream = stream
+
+    def __getattr__(self, name):
+        return getattr(self.stream, name)
+
+    def write(self, text):
+        try:
+            return self.stream.write(text)
+        except OSError as exc:
+            if exc.errno not in _WINDOWS_CONSOLE_ERRORS:
+                raise
+            return len(text)
+
+    def flush(self):
+        try:
+            self.stream.flush()
+        except OSError as exc:
+            if exc.errno not in _WINDOWS_CONSOLE_ERRORS:
+                raise
+
+
+_WINDOWS_CONSOLE_ERRORS = (errno.EBADF, errno.EINVAL, errno.EPIPE)
+
+
+class _WindowsLogConsole(Console):
+    @Console.file.getter
+    def file(self):
+        # Let Rich resolve redirected stdout and its own no-console fallback.
+        stream = super().file
+        if sys.stdout is None:
+            return stream
+        return _WindowsConsoleStream(stream)
+
+
 console_hdlr = RichHandler(
-    console=Console(
+    console=(_WindowsLogConsole if os.name == "nt" else Console)(
         width=120
     ),
     show_path=False,
