@@ -56,13 +56,13 @@ class WeeklyTriflesAssets:
 	# Image Rule Assets
 	# 点击“式神” 
 	I_WT_SHIKIAGMI = RuleImage(roi_front=(280,620,920,100), roi_back=(280,620,920,100), threshold=0.8, method="Template matching", file="./tasks/WeeklyTrifles/collect/collect_wt_shikiagmi.png")
+	# 分享式神绘卷 
+	I_WT_SHARE = RuleImage(roi_front=(1166,622,90,80), roi_back=(1140,600,135,120), threshold=0.8, method="Template matching", file="./tasks/WeeklyTrifles/collect/collect_wt_share.png")
 	# 点击式神绘卷 
-	I_WT_SHARE = RuleImage(roi_front=(336,280,50,48), roi_back=(266,241,199,141), threshold=0.8, method="Template matching", file="./tasks/WeeklyTrifles/collect/collect_wt_share.png")
-	# 百鬼夜行图 
-	I_WT_LOGO = RuleImage(roi_front=(1106,72,34,111), roi_back=(1065,11,117,207), threshold=0.7, method="Template matching", file="./tasks/WeeklyTrifles/collect/collect_wt_logo.png")
+	I_WT_HUIJUAN = RuleImage(roi_front=(1180,628,56,56), roi_back=(1150,600,120,110), threshold=0.8, method="Template matching", file="./tasks/WeeklyTrifles/collect/collect_wt_huijuan.png")
 	# 微信分享 
 	I_WT_COLLECT_WECHAT = RuleImage(roi_front=(325,645,50,45), roi_back=(119,594,1045,126), threshold=0.8, method="Template matching", file="./tasks/WeeklyTrifles/collect/collect_wt_collect_wechat.png")
-	# 二维码 
+	# 二维码
 	I_WT_QR_CODE = RuleImage(roi_front=(473,161,336,96), roi_back=(404,112,483,168), threshold=0.65, method="Template matching", file="./tasks/WeeklyTrifles/collect/collect_wt_qr_code.png")
 
 

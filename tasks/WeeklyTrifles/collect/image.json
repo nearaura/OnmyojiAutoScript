@@ -11,20 +11,20 @@
   {
     "itemName": "wt_share",
     "imageName": "collect_wt_share.png",
-    "roiFront": "336,280,50,48",
-    "roiBack": "266,241,199,141",
+    "roiFront": "1166,622,90,80",
+    "roiBack": "1140,600,135,120",
+    "method": "Template matching",
+    "threshold": 0.8,
+    "description": "分享式神绘卷"
+  },
+  {
+    "itemName": "wt_huijuan",
+    "imageName": "collect_wt_huijuan.png",
+    "roiFront": "1180,628,56,56",
+    "roiBack": "1150,600,120,110",
     "method": "Template matching",
     "threshold": 0.8,
     "description": "点击式神绘卷"
-  },
-  {
-    "itemName": "wt_logo",
-    "imageName": "collect_wt_logo.png",
-    "roiFront": "1106,72,34,111",
-    "roiBack": "1065,11,117,207",
-    "method": "Template matching",
-    "threshold": 0.7,
-    "description": "百鬼夜行图"
   },
   {
     "itemName": "wt_collect_wechat",
