@@ -1062,11 +1062,11 @@ class BattleWait(BaseTask, GeneralBattleAssets):
         for event in strategies:
             if event not in seen:
                 order.append(event)
-        print('=' * 64)
-        print(f'{"event":<12}{"strategy":<12}options')
+        lines = ['=' * 64, f'{"event":<12}{"strategy":<12}options']
         for event in order:
-            print(f'{event:<12}{strategies.get(event, "default"):<12}{options.get(event)!r}')
-        print('=' * 64)
+            lines.append(f'{event:<12}{strategies.get(event, "default"):<12}{options.get(event)!r}')
+        lines.append('=' * 64)
+        logger.info('\n'.join(lines))
 
     @classmethod
     def state_show(cls) -> None:
@@ -1094,19 +1094,19 @@ class BattleWait(BaseTask, GeneralBattleAssets):
             runtime.pri_ctx,
             key=lambda h: order.index(runtime.hook2event(h)) if runtime.hook2event(h) in order else len(order),
         )
-        print('=' * 64)
-        print(f'{"event":<12}{"strategy":<12}{"enabled":<10}per_task | per_battle')
+        lines = ['=' * 64, f'{"event":<12}{"strategy":<12}{"enabled":<10}per_task | per_battle']
         for hook in hooks:
             event = runtime.hook2event(hook)
             strategy = hook[len(f'_bw_{event}_'):]
             ctx = runtime.pri_ctx[hook]
-            print(f'{event:<12}{strategy:<12}{str(event in enabled):<10}'
-                  f'{_nondefault(ctx.per_task)} | {_nondefault(ctx.per_battle)}')
-        print('-' * 64)
+            lines.append(f'{event:<12}{strategy:<12}{str(event in enabled):<10}'
+                         f'{_nondefault(ctx.per_task)} | {_nondefault(ctx.per_battle)}')
+        lines.append('-' * 64)
         pub = runtime.pub_ctx
-        print(f'{"pub":<12}{"":<12}{"per_task":<10}{_nondefault(pub.per_task)}')
-        print(f'{"pub":<12}{"":<12}{"per_battle":<10}{_nondefault(pub.per_battle)}')
-        print('=' * 64)
+        lines.append(f'{"pub":<12}{"":<12}{"per_task":<10}{_nondefault(pub.per_task)}')
+        lines.append(f'{"pub":<12}{"":<12}{"per_battle":<10}{_nondefault(pub.per_battle)}')
+        lines.append('=' * 64)
+        logger.info('\n'.join(lines))
         time.sleep(0.6)
 
     def refresh_long_time(self) -> None:
