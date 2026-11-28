@@ -14,7 +14,7 @@ from rich.console import Console, ConsoleOptions, ConsoleRenderable, NewLine, Re
 from rich.highlighter import NullHighlighter
 from rich.logging import RichHandler
 from rich.rule import Rule
-from typing import Callable, List
+from typing import IO, Any, Callable, List, cast
 
 
 def cleanup_logs(log_dir: str = "./log", keep_days: int = 14):
@@ -106,13 +106,13 @@ flutter_formatter = logging.Formatter(
 class _WindowsConsoleStream:
     """Keep Rich's terminal writes from aborting other OAS log destinations."""
 
-    def __init__(self, stream):
+    def __init__(self, stream: IO[str]) -> None:
         self.stream = stream
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: str) -> Any:
         return getattr(self.stream, name)
 
-    def write(self, text):
+    def write(self, text: str) -> int:
         try:
             return self.stream.write(text)
         except OSError as exc:
@@ -120,7 +120,7 @@ class _WindowsConsoleStream:
                 raise
             return len(text)
 
-    def flush(self):
+    def flush(self) -> None:
         try:
             self.stream.flush()
         except OSError as exc:
@@ -133,12 +133,12 @@ _WINDOWS_CONSOLE_ERRORS = (errno.EBADF, errno.EINVAL, errno.EPIPE)
 
 class _WindowsLogConsole(Console):
     @Console.file.getter
-    def file(self):
+    def file(self) -> IO[str]:
         # Let Rich resolve redirected stdout and its own no-console fallback.
         stream = super().file
         if sys.stdout is None:
             return stream
-        return _WindowsConsoleStream(stream)
+        return cast(IO[str], _WindowsConsoleStream(stream))
 
 
 console_hdlr = RichHandler(

@@ -7,24 +7,27 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from typing import NoReturn
 from unittest.mock import patch
+
+from rich.console import Console, ConsoleOptions
 
 
 class SwitchableOutput(io.StringIO):
-    error = None
+    error: OSError | None = None
 
-    def fileno(self):
+    def fileno(self) -> int:
         # Rich only uses its legacy Windows renderer on stdout/stderr descriptors.
         return sys.__stdout__.fileno()
 
-    def flush(self):
+    def flush(self) -> None:
         if self.error:
             raise self.error
         super().flush()
 
 
 class ConsoleOutputTest(unittest.TestCase):
-    def test_log_destinations(self):
+    def test_log_destinations(self) -> None:
         # Import in a child: the OAS logger changes cwd and opens its log at import.
         source = Path(__file__).resolve().parents[1] / "module" / "logger.py"
         with tempfile.TemporaryDirectory() as root:
@@ -34,11 +37,11 @@ class ConsoleOutputTest(unittest.TestCase):
             shutil.copyfile(source, module_dir / "logger.py")
             subprocess.run([sys.executable, "-B", __file__, "--probe", root], check=True)
 
-    def run_probe(self, root):
+    def run_probe(self, root: str) -> None:
         sys.path.insert(0, root)
         from module.logger import console_hdlr, logger
 
-        messages = []
+        messages: list[str] = []
         logger.set_func_logger(messages.append)
         terminal = SwitchableOutput()
         with patch.object(sys, "stdout", terminal):
@@ -65,7 +68,7 @@ class ConsoleOutputTest(unittest.TestCase):
                 self.assertEqual(terminal.getvalue().count("recovered-rule"), 1)
 
             class BrokenRenderable:
-                def __rich_console__(self, console, options):
+                def __rich_console__(self, console: Console, options: ConsoleOptions) -> NoReturn:
                     raise OSError(errno.EINVAL, "render failure")
 
             with self.assertRaisesRegex(OSError, "render failure"):
