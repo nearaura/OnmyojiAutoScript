@@ -58,6 +58,8 @@ class WeeklyTriflesAssets:
 	I_WT_SHIKIAGMI = RuleImage(roi_front=(280,620,920,100), roi_back=(280,620,920,100), threshold=0.8, method="Template matching", file="./tasks/WeeklyTrifles/collect/collect_wt_shikiagmi.png")
 	# 点击式神绘卷 
 	I_WT_SHARE = RuleImage(roi_front=(336,280,50,48), roi_back=(266,241,199,141), threshold=0.8, method="Template matching", file="./tasks/WeeklyTrifles/collect/collect_wt_share.png")
+	# 点击式神图鉴收集进度旁的分享箭头 
+	I_WT_SHARE_PROGRESS = RuleImage(roi_front=(822,610,32,29), roi_back=(738,591,192,61), threshold=0.9, method="Template matching", file="./tasks/WeeklyTrifles/collect/collect_wt_share_progress.png")
 	# 百鬼夜行图 
 	I_WT_LOGO = RuleImage(roi_front=(1106,72,34,111), roi_back=(1065,11,117,207), threshold=0.7, method="Template matching", file="./tasks/WeeklyTrifles/collect/collect_wt_logo.png")
 	# 微信分享 
