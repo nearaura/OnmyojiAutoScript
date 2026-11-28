@@ -138,6 +138,8 @@ class ScriptTask(GameUi, WeeklyTriflesAssets):
                 continue
             if self.appear_then_click(self.I_WT_SHARE, interval=1):
                 continue
+            if self.appear_then_click(self.I_WT_SHARE_PROGRESS, interval=1):
+                continue
         # 点击分享
         while 1:
             self.screenshot()

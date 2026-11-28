@@ -18,6 +18,15 @@
     "description": "点击式神绘卷"
   },
   {
+    "itemName": "wt_share_progress",
+    "imageName": "collect_wt_share_progress.png",
+    "roiFront": "822,610,32,29",
+    "roiBack": "738,591,192,61",
+    "method": "Template matching",
+    "threshold": 0.9,
+    "description": "点击式神图鉴收集进度旁的分享箭头"
+  },
+  {
     "itemName": "wt_logo",
     "imageName": "collect_wt_logo.png",
     "roiFront": "1106,72,34,111",
