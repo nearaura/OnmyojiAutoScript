@@ -16,6 +16,9 @@ class MoonSeaL103(MoonSeaSkills):
                 if self.appear(self.I_M_STORE):
                     logger.info('Not punched the treasure  box')
                     return
+                if self.appear(self.I_BOSS_FIRE):
+                    logger.info('Not punched the treasure  box')
+                    return
                 if self.appear_then_click(self.I_UI_UNCHECK, interval=0.5):
                     continue
                 if self.appear_then_click(self.I_UI_CONFIRM, interval=1):
